@@ -7,6 +7,16 @@ import "./admin.css";
 
 type LoginState = "idle" | "loading";
 type AccessState = "checking" | "allowed" | "denied" | "signed-out";
+type CountItem = { label: string; count: number };
+type Stats = {
+  downloads: number;
+  pageViews: number;
+  uniqueSessions: number;
+  averageStaySeconds: number;
+  topLocations: CountItem[];
+  topSections: CountItem[];
+  topPages: CountItem[];
+};
 
 export default function AdminPage() {
   const [user, setUser] = useState<User | null>(null);
@@ -15,6 +25,8 @@ export default function AdminPage() {
   const [loginState, setLoginState] = useState<LoginState>("idle");
   const [accessState, setAccessState] = useState<AccessState>("checking");
   const [message, setMessage] = useState("");
+  const [stats, setStats] = useState<Stats | null>(null);
+  const [statsMessage, setStatsMessage] = useState("");
 
   useEffect(() => {
     if (!supabase) {
@@ -64,9 +76,38 @@ export default function AdminPage() {
     }
 
     setAccessState(data ? "allowed" : "denied");
+    if (data) {
+      await loadStats();
+    }
     if (!data) {
       setMessage(`This account is signed in as ${currentUser.email}, but that email is not on the admin allowlist.`);
     }
+  }
+
+  async function loadStats() {
+    if (!supabase) return;
+
+    setStatsMessage("Loading analytics...");
+    const { data: sessionData } = await supabase.auth.getSession();
+    const token = sessionData.session?.access_token;
+
+    if (!token) {
+      setStatsMessage("Your admin session expired. Please sign in again.");
+      return;
+    }
+
+    const response = await fetch("/api/admin/stats", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const result = await response.json();
+
+    if (!response.ok) {
+      setStatsMessage(result.error ?? "Unable to load analytics.");
+      return;
+    }
+
+    setStats(result);
+    setStatsMessage("");
   }
 
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
@@ -162,12 +203,57 @@ export default function AdminPage() {
         )}
 
         {accessState === "allowed" && (
-          <div className="admin-empty">
-            <h2>Welcome, {user.email}</h2>
-            <p>Your basic admin page is ready. We can add content tools, donation reports, APK version management, or app announcements next.</p>
+          <div className="analytics-dashboard">
+            <div className="admin-empty">
+              <h2>Welcome, {user.email}</h2>
+              <p>Analytics update as visitors use the website. Location depends on deployment headers, so local traffic may appear as Unknown.</p>
+            </div>
+
+            {statsMessage && <p className="admin-message">{statsMessage}</p>}
+
+            {stats && (
+              <>
+                <div className="stats-grid">
+                  <StatCard label="APK downloads" value={stats.downloads} />
+                  <StatCard label="Page views" value={stats.pageViews} />
+                  <StatCard label="Unique sessions" value={stats.uniqueSessions} />
+                  <StatCard label="Average stay" value={formatDuration(stats.averageStaySeconds)} />
+                </div>
+
+                <div className="stats-lists">
+                  <StatsList title="Top locations" items={stats.topLocations} />
+                  <StatsList title="Most viewed sections" items={stats.topSections} />
+                  <StatsList title="Top pages" items={stats.topPages} />
+                </div>
+              </>
+            )}
           </div>
         )}
       </section>
     </main>
   );
+}
+
+function StatCard({ label, value }: { label: string; value: number | string }) {
+  return <article className="stat-card"><span>{label}</span><strong>{value}</strong></article>;
+}
+
+function StatsList({ title, items }: { title: string; items: CountItem[] }) {
+  return (
+    <article className="stats-list">
+      <h2>{title}</h2>
+      {items.length ? (
+        <ol>{items.map((item) => <li key={item.label}><span>{item.label}</span><b>{item.count}</b></li>)}</ol>
+      ) : (
+        <p>No data yet.</p>
+      )}
+    </article>
+  );
+}
+
+function formatDuration(seconds: number) {
+  if (seconds < 60) return `${seconds}s`;
+  const minutes = Math.floor(seconds / 60);
+  const rest = seconds % 60;
+  return `${minutes}m ${rest}s`;
 }

@@ -72,14 +72,14 @@ export default function Home() {
         <div className="feature-grid">{features.map((f, i) => <article className={`feature feature-${i+1}`} key={f.title}><span className="feature-icon">{f.icon}</span><Luna src={f.mascot} className="feature-luna" alt={`Lumi for ${f.title}`} /><h3>{f.title}</h3><p>{f.text}</p><span className="feature-num">0{i+1}</span></article>)}</div>
       </section>
 
-      <section className="screenshots-section">
+      <section className="screenshots-section" id="previews">
         <div className="shell">
           <div className="screenshots-intro"><span className="kicker">INSIDE THE APP</span><h2>A soft interface<br />made for <em>real moments.</em></h2><p>Show people what they are downloading: a calm, friendly companion with Lumi, private journaling, and gentle audio tools.</p></div>
           <div className="screenshots-grid">{screenshots.map((s, i) => <article className={`screenshot-card screenshot-${i+1}`} key={s.title}><div className="screenshot-frame"><img src={s.src} alt={`${s.title} screen in the CalmSpace app`} loading="lazy" /></div><div><h3>{s.title}</h3><p>{s.text}</p></div></article>)}</div>
         </div>
       </section>
 
-      <section className="how-section"><div className="shell how-grid">
+      <section className="how-section" id="how"><div className="shell how-grid">
         <div className="how-copy"><span className="kicker">HOW IT FEELS</span><h2>One quiet moment<br />at a time.</h2><p className="how-lede">CalmSpace meets you where you are. There is no perfect way to use it.</p><Luna src="/mascot/lumi-how-it-feels.png" className="how-lumi" alt="Lumi meditating peacefully" /></div>
         <div className="steps">{steps.map((s) => <div className="step" key={s[0]}><span>{s[0]}</span><div><h3>{s[1]}</h3><p>{s[2]}</p></div></div>)}</div>
       </div></section>

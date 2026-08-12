@@ -16,6 +16,20 @@ values ('you@example.com');
 
 The `/admin` page lets a signed-in user access the dashboard only when their email exists in `public.admin_users`.
 
+## Analytics dashboard
+
+Run `202608120002_create_analytics_events.sql` to enable the dashboard metrics.
+
+The website records:
+
+- page views
+- section views
+- APK download clicks
+- approximate session duration
+- country/region/city when deployment headers provide them
+
+Local development and some hosts may show location as `Unknown`. On Vercel, the API reads Vercel geo headers when available.
+
 ## Environment variables
 
 For local development, the current project supports:
