@@ -1,0 +1,141 @@
+.admin-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 48px 18px;
+  background:
+    radial-gradient(circle at 20% 15%, #d7f4e7 0, transparent 28%),
+    radial-gradient(circle at 80% 20%, #f5c7a8 0, transparent 24%),
+    #fbf8ef;
+  color: #20372f;
+}
+
+.admin-panel {
+  width: min(100%, 540px);
+  padding: 34px;
+  background: #fffdf7;
+  border: 1px solid #e4ddcf;
+  border-radius: 24px;
+  box-shadow: 0 24px 70px #20372f20;
+}
+
+.admin-dashboard {
+  width: min(100%, 820px);
+}
+
+.admin-kicker {
+  display: block;
+  color: #2c7d6a;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.admin-panel h1,
+.admin-panel h2 {
+  font-family: var(--font-serif), serif;
+  font-weight: 430;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.admin-panel h1 {
+  font-size: clamp(42px, 7vw, 64px);
+  margin: 16px 0;
+}
+
+.admin-panel h2 {
+  font-size: 32px;
+  margin: 0 0 12px;
+}
+
+.admin-panel p {
+  color: #66776f;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.admin-form {
+  display: grid;
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.admin-form label {
+  display: grid;
+  gap: 8px;
+  color: #36574c;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.admin-form input {
+  width: 100%;
+  border: 1px solid #cfd8cf;
+  border-radius: 14px;
+  padding: 14px 16px;
+  background: white;
+  color: #20372f;
+  font: inherit;
+}
+
+.admin-form input:focus {
+  outline: 3px solid #d7f4e7;
+  border-color: #2c7d6a;
+}
+
+.admin-button {
+  border: 0;
+  border-radius: 999px;
+  padding: 14px 20px;
+  background: #20372f;
+  color: white;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 12px 28px #20372f24;
+}
+
+.admin-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.admin-button.secondary {
+  background: #f7f1e5;
+  color: #20372f;
+  box-shadow: none;
+}
+
+.admin-message {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #f8d5bb;
+  color: #20372f !important;
+}
+
+.admin-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.admin-empty {
+  margin-top: 28px;
+  padding: 24px;
+  border-radius: 18px;
+  background: #e6f2ed;
+}
+
+@media (max-width: 620px) {
+  .admin-panel {
+    padding: 24px;
+  }
+
+  .admin-header {
+    flex-direction: column;
+  }
+}
