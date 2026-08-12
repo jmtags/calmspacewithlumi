@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 
 const sessionKey = "calmspace_session_id";
-const trackedSections = ["top", "features", "previews", "how", "privacy", "support", "try"];
+const trackedSections = ["top", "features", "previews", "how", "privacy", "feedback", "support", "try"];
 
 function getSessionId() {
   const existing = window.sessionStorage.getItem(sessionKey);

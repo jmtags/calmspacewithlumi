@@ -30,6 +30,25 @@ The website records:
 
 Local development and some hosts may show location as `Unknown`. On Vercel, the API reads Vercel geo headers when available.
 
+## Anonymous feedback
+
+Run `202608120003_create_feedback.sql` to enable anonymous ratings and comments.
+
+The feedback form does not ask for names, email addresses, or accounts. It stores:
+
+- rating from 1 to 5
+- whether the feedback is about the app, website, or both
+- the comment or suggestion
+- an anonymous browser session id for rate limiting
+
+Spam and abuse protections:
+
+- hidden honeypot field
+- strict rating/category/comment validation
+- 10 to 1000 character comment limit
+- server-side rate limit of 3 submissions per 10 minutes per anonymous session
+- public users can submit through the `submit_feedback` function, but only allowlisted admins can read feedback rows
+
 ## Environment variables
 
 For local development, the current project supports:

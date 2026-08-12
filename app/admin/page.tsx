@@ -13,6 +13,9 @@ type Stats = {
   pageViews: number;
   uniqueSessions: number;
   averageStaySeconds: number;
+  feedbackCount: number;
+  averageRating: number;
+  feedbackCategories: CountItem[];
   topLocations: CountItem[];
   topSections: CountItem[];
   topPages: CountItem[];
@@ -218,11 +221,14 @@ export default function AdminPage() {
                   <StatCard label="Page views" value={stats.pageViews} />
                   <StatCard label="Unique sessions" value={stats.uniqueSessions} />
                   <StatCard label="Average stay" value={formatDuration(stats.averageStaySeconds)} />
+                  <StatCard label="Feedback sent" value={stats.feedbackCount} />
+                  <StatCard label="Average rating" value={stats.averageRating ? `${stats.averageRating}/5` : "No data"} />
                 </div>
 
                 <div className="stats-lists">
                   <StatsList title="Top locations" items={stats.topLocations} />
                   <StatsList title="Most viewed sections" items={stats.topSections} />
+                  <StatsList title="Feedback topics" items={stats.feedbackCategories} />
                   <StatsList title="Top pages" items={stats.topPages} />
                 </div>
               </>

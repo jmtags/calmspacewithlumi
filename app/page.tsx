@@ -1,3 +1,5 @@
+import { FeedbackForm } from "./feedback-form";
+
 const features = [
   { icon: "◌", title: "Calm me now", text: "Follow a gentle guided breathing exercise when you need a quieter moment.", mascot: "/mascot/luna-breathing.png" },
   { icon: "♫", title: "Soothing sounds", text: "Choose rain, ocean, forest, fire, or birds and adjust the volume to what feels right.", mascot: "/mascot/luna-listening.png" },
@@ -35,7 +37,7 @@ export default function Home() {
       <nav className="nav shell" aria-label="Main navigation">
         <a className="brand" href="#top"><LotusMark small /><span>CalmSpace</span></a>
         <div className="nav-links">
-          <a href="#features">Features</a><a href="#privacy">Privacy</a><a href="#support">Support us</a>
+          <a href="#features">Features</a><a href="#privacy">Privacy</a><a href="#feedback">Feedback</a><a href="#support">Support us</a>
         </div>
         <a className="button button-small" href="/CalmSpace.apk" download>Download APK <span>↓</span></a>
       </nav>
@@ -89,6 +91,11 @@ export default function Home() {
         <div className="privacy-copy"><span className="kicker">YOUR SPACE IS YOURS</span><h2>Personal reflection<br />should stay <em>personal.</em></h2><p>Your name, journal entries, moods, and settings are saved locally on your phone. CalmSpace is designed as a private self-care companion—not a place that profits from your feelings.</p><div className="privacy-list"><span>✓ Local device storage</span><span>✓ No advertising trackers</span><span>✓ Clear privacy controls</span></div><small>CalmSpace is not a substitute for professional care or emergency support.</small></div>
       </section>
 
+      <section className="feedback-section" id="feedback"><div className="shell feedback-inner">
+        <div className="feedback-copy"><span className="kicker">HELP CALMSPACE GROW</span><h2>Your thoughts can make<br /><em>Lumi gentler.</em></h2><p>Tell us what feels helpful, confusing, missing, or worth improving in the app or website.</p><small>All comments and suggestions are anonymous. Please avoid sharing names, phone numbers, email addresses, or private health details.</small></div>
+        <div className="feedback-card"><FeedbackForm /><div className="feedback-security"><b>Built-in protection</b><p>Feedback is limited, validated on the server, checked with a hidden spam trap, and rate-limited so the form cannot be easily spammed or abused.</p></div></div>
+      </div></section>
+
       <section className="support" id="support"><div className="shell support-inner">
         <div className="support-copy"><span className="kicker light">KEEP CALMSPACE OPEN</span><h2>Free for everyone.<br /><em>Supported by kindness.</em></h2><p>CalmSpace has no subscription and no ads. If it has helped make one difficult moment a little lighter, you can help keep it growing through a voluntary GCash donation.</p><div className="donation-box" aria-label="GCash donation QR details"><span className="donation-label">GCash donation QR</span><div className="donation-qr"><img src={donationDetails.qrCode} alt="GCash donation QR code for CalmSpace" /><span>Scan to donate with GCash</span></div></div></div>
         <div className="support-card"><div className="jar"><Luna src="/mascot/luna-celebrating.png" className="jar-luna" alt="Lumi celebrating support" /><span className="coin c1">♥</span><span className="coin c2">♥</span><span className="coin c3">♥</span></div><h3>Your support helps with</h3><ul><li><span>01</span>Keeping the app and services running</li><li><span>02</span>Building thoughtful new features</li><li><span>03</span>Maintaining privacy and accessibility</li></ul><div className="donation-disclaimer"><b>Donation disclaimer</b><p>Donations are optional, non-refundable gifts used only to support CalmSpace development, maintenance, and operating costs. This is not a charity drive, public-welfare solicitation, or fundraising campaign for beneficiaries.</p><p>Donations do not buy medical, counseling, emergency, or professional services, and they are not represented as tax-deductible contributions.</p></div></div>
@@ -96,7 +103,7 @@ export default function Home() {
 
       <section className="final-cta shell" id="try"><Luna src="/mascot/luna-sleeping.png" className="final-luna" alt="Lumi resting peacefully" /><span className="kicker">YOUR CALM SPACE IS READY</span><h2>Take a breath.<br /><em>You&apos;re here now.</em></h2><p>A private, simple companion for the moments you need to pause.</p><a className="button" href="/CalmSpace.apk" download>Download CalmSpace APK <span>↓</span></a></section>
 
-      <footer><div className="shell footer-inner"><a className="brand" href="#top"><LotusMark small /><span>CalmSpace</span></a><p>Made gently for real-life moments.</p><div><a href="#privacy">Privacy</a><a href="#support">Donate</a><a href="mailto:hello@calmspace.app">Contact</a></div></div></footer>
+      <footer><div className="shell footer-inner"><a className="brand" href="#top"><LotusMark small /><span>CalmSpace</span></a><p>Made gently for real-life moments.</p><div><a href="#privacy">Privacy</a><a href="#feedback">Feedback</a><a href="#support">Donate</a><a href="mailto:hello@calmspace.app">Contact</a></div></div></footer>
     </main>
   );
 }

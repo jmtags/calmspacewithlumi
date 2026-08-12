@@ -12,6 +12,11 @@ type AnalyticsEvent = {
   city: string | null;
 };
 
+type FeedbackSubmission = {
+  rating: number;
+  category: string;
+};
+
 function topCounts(values: Array<string | null | undefined>, fallback = "Unknown") {
   const counts = new Map<string, number>();
   for (const value of values) {
@@ -68,6 +73,17 @@ export async function GET(request: NextRequest) {
   }
 
   const events = (data ?? []) as AnalyticsEvent[];
+  const { data: feedbackData, error: feedbackError } = await supabase
+    .from("feedback_submissions")
+    .select("rating,category")
+    .gte("created_at", new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString())
+    .limit(5000);
+
+  if (feedbackError) {
+    return NextResponse.json({ error: feedbackError.message }, { status: 500 });
+  }
+
+  const feedback = (feedbackData ?? []) as FeedbackSubmission[];
   const downloads = events.filter((event) => event.event_type === "download_click").length;
   const pageViews = events.filter((event) => event.event_type === "page_view").length;
   const uniqueSessions = new Set(events.map((event) => event.session_id)).size;
@@ -83,6 +99,11 @@ export async function GET(request: NextRequest) {
     pageViews,
     uniqueSessions,
     averageStaySeconds,
+    feedbackCount: feedback.length,
+    averageRating: feedback.length
+      ? Number((feedback.reduce((sum, item) => sum + item.rating, 0) / feedback.length).toFixed(1))
+      : 0,
+    feedbackCategories: topCounts(feedback.map((item) => item.category)),
     topLocations: topCounts(
       events.map((event) => [event.city, event.region, event.country].filter(Boolean).join(", "))
     ),
