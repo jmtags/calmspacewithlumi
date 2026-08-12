@@ -54,7 +54,7 @@ export default function AdminPage() {
     const { data, error } = await supabase
       .from("admin_users")
       .select("id")
-      .eq("email", currentUser.email)
+      .ilike("email", currentUser.email ?? "")
       .maybeSingle();
 
     if (error) {
@@ -65,7 +65,7 @@ export default function AdminPage() {
 
     setAccessState(data ? "allowed" : "denied");
     if (!data) {
-      setMessage("This account is signed in, but it is not on the admin allowlist.");
+      setMessage(`This account is signed in as ${currentUser.email}, but that email is not on the admin allowlist.`);
     }
   }
 
