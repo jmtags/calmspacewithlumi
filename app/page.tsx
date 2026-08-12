@@ -93,7 +93,7 @@ export default function Home() {
 
       <section className="feedback-section" id="feedback"><div className="shell feedback-inner">
         <div className="feedback-copy"><span className="kicker">HELP CALMSPACE GROW</span><h2>Your thoughts can make<br /><em>Lumi gentler.</em></h2><p>Tell us what feels helpful, confusing, missing, or worth improving in the app or website.</p><small>All comments and suggestions are anonymous. Please avoid sharing names, phone numbers, email addresses, or private health details.</small></div>
-        <div className="feedback-card"><FeedbackForm /><div className="feedback-security"><b>Built-in protection</b><p>Feedback is limited, validated on the server, checked with a hidden spam trap, and rate-limited so the form cannot be easily spammed or abused.</p></div></div>
+        <div className="feedback-card"><FeedbackForm /></div>
       </div></section>
 
       <section className="support" id="support"><div className="shell support-inner">

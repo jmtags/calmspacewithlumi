@@ -804,21 +804,6 @@ em {
 .feedback-message.success {
   background: #d7f4e7;
 }
-.feedback-security {
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid #b9d9ce;
-}
-.feedback-security b {
-  color: var(--ink);
-  font-size: 14px;
-}
-.feedback-security p {
-  color: #52675e;
-  font-size: 13px;
-  line-height: 1.7;
-  margin: 8px 0 0;
-}
 .support {
   background: var(--navy);
   color: #f8f2e7;
