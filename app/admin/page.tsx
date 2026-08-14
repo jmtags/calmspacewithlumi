@@ -1,6 +1,7 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import type { FormEvent, ReactNode } from "react";
 import type { User } from "@supabase/supabase-js";
 import { hasSupabaseConfig, supabase } from "../../lib/supabase/client";
 import "./admin.css";
@@ -17,6 +18,7 @@ type Stats = {
   averageRating: number;
   feedbackCategories: CountItem[];
   topLocations: CountItem[];
+  allLocations: CountItem[];
   topSections: CountItem[];
   topPages: CountItem[];
 };
@@ -26,14 +28,14 @@ export default function AdminPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginState, setLoginState] = useState<LoginState>("idle");
-  const [accessState, setAccessState] = useState<AccessState>("checking");
+  const [accessState, setAccessState] = useState<AccessState>(() => hasSupabaseConfig() ? "checking" : "signed-out");
   const [message, setMessage] = useState("");
   const [stats, setStats] = useState<Stats | null>(null);
   const [statsMessage, setStatsMessage] = useState("");
+  const [showAllLocations, setShowAllLocations] = useState(false);
 
   useEffect(() => {
     if (!supabase) {
-      setAccessState("signed-out");
       return;
     }
 
@@ -226,7 +228,19 @@ export default function AdminPage() {
                 </div>
 
                 <div className="stats-lists">
-                  <StatsList title="Top locations" items={stats.topLocations} />
+                  <StatsList
+                    title={showAllLocations ? "All locations" : "Top locations"}
+                    items={showAllLocations ? stats.allLocations : stats.topLocations}
+                    action={stats.allLocations.length > stats.topLocations.length ? (
+                      <button
+                        className="stats-list-action"
+                        type="button"
+                        onClick={() => setShowAllLocations((value) => !value)}
+                      >
+                        {showAllLocations ? "Show top" : `View all ${stats.allLocations.length}`}
+                      </button>
+                    ) : null}
+                  />
                   <StatsList title="Most viewed sections" items={stats.topSections} />
                   <StatsList title="Feedback topics" items={stats.feedbackCategories} />
                   <StatsList title="Top pages" items={stats.topPages} />
@@ -244,10 +258,13 @@ function StatCard({ label, value }: { label: string; value: number | string }) {
   return <article className="stat-card"><span>{label}</span><strong>{value}</strong></article>;
 }
 
-function StatsList({ title, items }: { title: string; items: CountItem[] }) {
+function StatsList({ title, items, action }: { title: string; items: CountItem[]; action?: ReactNode }) {
   return (
     <article className="stats-list">
-      <h2>{title}</h2>
+      <div className="stats-list-header">
+        <h2>{title}</h2>
+        {action}
+      </div>
       {items.length ? (
         <ol>{items.map((item) => <li key={item.label}><span>{item.label}</span><b>{item.count}</b></li>)}</ol>
       ) : (

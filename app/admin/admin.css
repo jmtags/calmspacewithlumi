@@ -179,8 +179,32 @@
   padding: 20px;
 }
 
+.stats-list-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .stats-list h2 {
   font-size: 24px;
+}
+
+.stats-list-action {
+  border: 1px solid #c9dbd4;
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: #e6f2ed;
+  color: #20372f;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.stats-list-action:hover {
+  border-color: #2c7d6a;
 }
 
 .stats-list ol {

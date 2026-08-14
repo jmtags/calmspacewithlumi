@@ -17,7 +17,7 @@ type FeedbackSubmission = {
   category: string;
 };
 
-function topCounts(values: Array<string | null | undefined>, fallback = "Unknown") {
+function countItems(values: Array<string | null | undefined>, fallback = "Unknown") {
   const counts = new Map<string, number>();
   for (const value of values) {
     const key = value || fallback;
@@ -25,8 +25,15 @@ function topCounts(values: Array<string | null | undefined>, fallback = "Unknown
   }
   return [...counts.entries()]
     .map(([label, count]) => ({ label, count }))
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 8);
+    .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
+}
+
+function topCounts(values: Array<string | null | undefined>, fallback = "Unknown") {
+  return countItems(values, fallback).slice(0, 8);
+}
+
+function locationLabel(event: AnalyticsEvent) {
+  return [event.city, event.region, event.country].filter(Boolean).join(", ");
 }
 
 export async function GET(request: NextRequest) {
@@ -84,8 +91,10 @@ export async function GET(request: NextRequest) {
   }
 
   const feedback = (feedbackData ?? []) as FeedbackSubmission[];
+  const pageViewEvents = events.filter((event) => event.event_type === "page_view");
+  const allLocations = countItems(pageViewEvents.map(locationLabel));
   const downloads = events.filter((event) => event.event_type === "download_click").length;
-  const pageViews = events.filter((event) => event.event_type === "page_view").length;
+  const pageViews = pageViewEvents.length;
   const uniqueSessions = new Set(events.map((event) => event.session_id)).size;
   const sessionDurations = events
     .filter((event) => event.event_type === "session_end" && typeof event.duration_seconds === "number")
@@ -104,9 +113,8 @@ export async function GET(request: NextRequest) {
       ? Number((feedback.reduce((sum, item) => sum + item.rating, 0) / feedback.length).toFixed(1))
       : 0,
     feedbackCategories: topCounts(feedback.map((item) => item.category)),
-    topLocations: topCounts(
-      events.map((event) => [event.city, event.region, event.country].filter(Boolean).join(", "))
-    ),
+    topLocations: allLocations.slice(0, 8),
+    allLocations,
     topSections: topCounts(
       events
         .filter((event) => event.event_type === "section_view")
