@@ -1,9 +1,9 @@
 {
-  "latestVersionCode": 5,
-  "latestVersionName": "1.4",
+  "latestVersionCode": 6,
+  "latestVersionName": "1.5",
   "apkUrl": "https://www.calmspacewithlumi.com/CalmSpace.apk",
   "versionUrl": "https://www.calmspacewithlumi.com/version.json",
-  "releaseNotes": "Updated contact email and automated website APK release files.",
-  "publishedAt": "2026-08-14T14:46:56Z",
-  "apkSha256": "ed2b6e10c9b89a727cbbbc606daa486ca52473436b278775f59198211c15db7f"
+  "releaseNotes": "Added fairy-dust update glow for Profile and About the app.",
+  "publishedAt": "2026-08-14T15:00:37Z",
+  "apkSha256": "ba3af852ba133e1e058d55692fdd91322070a6f18899a19d00235e99760ad61d"
 }
