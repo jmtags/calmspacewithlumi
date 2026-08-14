@@ -1,0 +1,9 @@
+{
+  "latestVersionCode": 2,
+  "latestVersionName": "1.1",
+  "apkUrl": "https://www.calmspacewithlumi.com/CalmSpace.apk",
+  "versionUrl": "https://www.calmspacewithlumi.com/version.json",
+  "releaseNotes": "Added in-app update checks and the Release Body Tension with Lumi exercise.",
+  "publishedAt": "2026-08-14T13:41:34Z",
+  "apkSha256": "cc792770d66e186a9ff33ef352bd700ee2e92c40f0de17b2c7ef07ac48c915b9"
+}
