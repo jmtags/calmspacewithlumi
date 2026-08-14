@@ -1,9 +1,9 @@
 {
-  "latestVersionCode": 6,
-  "latestVersionName": "1.5",
+  "latestVersionCode": 7,
+  "latestVersionName": "1.6",
   "apkUrl": "https://www.calmspacewithlumi.com/CalmSpace.apk",
   "versionUrl": "https://www.calmspacewithlumi.com/version.json",
-  "releaseNotes": "Added fairy-dust update glow for Profile and About the app.",
-  "publishedAt": "2026-08-14T15:00:37Z",
-  "apkSha256": "ba3af852ba133e1e058d55692fdd91322070a6f18899a19d00235e99760ad61d"
+  "releaseNotes": "Removed Calm Coach and Sleep Support buttons from Settings.",
+  "publishedAt": "2026-08-14T15:17:19Z",
+  "apkSha256": "0a7e948ba97cb95f79e0c2992ff504954bf4f8399624db919f9a524ce7cc772b"
 }
