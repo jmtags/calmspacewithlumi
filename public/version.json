@@ -1,9 +1,9 @@
 {
-  "latestVersionCode": 4,
-  "latestVersionName": "1.3",
+  "latestVersionCode": 5,
+  "latestVersionName": "1.4",
   "apkUrl": "https://www.calmspacewithlumi.com/CalmSpace.apk",
   "versionUrl": "https://www.calmspacewithlumi.com/version.json",
-  "releaseNotes": "Added update popup, manual update button in About, and glowing update indicators.",
-  "publishedAt": "2026-08-14T14:16:03Z",
-  "apkSha256": "83d3fde73f20e1e39d96afc500f8dd53e8a95efc7a2f1eae16535139a58f23cd"
+  "releaseNotes": "Updated contact email and automated website APK release files.",
+  "publishedAt": "2026-08-14T14:46:56Z",
+  "apkSha256": "ed2b6e10c9b89a727cbbbc606daa486ca52473436b278775f59198211c15db7f"
 }
