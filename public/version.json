@@ -1,9 +1,9 @@
 {
-  "latestVersionCode": 15,
-  "latestVersionName": "1.14",
+  "latestVersionCode": 23,
+  "latestVersionName": "1.22",
   "apkUrl": "https://www.calmspacewithlumi.com/CalmSpace.apk",
   "versionUrl": "https://www.calmspacewithlumi.com/version.json",
-  "releaseNotes": "Polished Ground with your senses step titles and skip button design.",
-  "publishedAt": "2026-08-15T03:24:10Z",
-  "apkSha256": "6fab196aff15da3a4dca0f56b84b9ea524515c5223682876c63b44e36586dfef"
+  "releaseNotes": "Added Daily Check-In return buttons for journal, breathing, and sounds.",
+  "publishedAt": "2026-08-15T15:34:37Z",
+  "apkSha256": "375ecf66d90e25edd56c6f44528d85815a4b1d8a58417a82499099b5c999af97"
 }
