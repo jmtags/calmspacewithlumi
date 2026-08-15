@@ -1,9 +1,9 @@
 {
-  "latestVersionCode": 10,
-  "latestVersionName": "1.9",
+  "latestVersionCode": 15,
+  "latestVersionName": "1.14",
   "apkUrl": "https://www.calmspacewithlumi.com/CalmSpace.apk",
   "versionUrl": "https://www.calmspacewithlumi.com/version.json",
-  "releaseNotes": "Improved Breathe with Lumi subtitle timing and fixed post-breathing check-in icons.",
-  "publishedAt": "2026-08-15T01:55:39Z",
-  "apkSha256": "ad42d170319154ca169b90aa71a37fb6eec3f086d02fd12fab6e828b9dba65c2"
+  "releaseNotes": "Polished Ground with your senses step titles and skip button design.",
+  "publishedAt": "2026-08-15T03:24:10Z",
+  "apkSha256": "6fab196aff15da3a4dca0f56b84b9ea524515c5223682876c63b44e36586dfef"
 }
