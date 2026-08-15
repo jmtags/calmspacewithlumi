@@ -1,9 +1,9 @@
 {
-  "latestVersionCode": 7,
-  "latestVersionName": "1.6",
+  "latestVersionCode": 9,
+  "latestVersionName": "1.8",
   "apkUrl": "https://www.calmspacewithlumi.com/CalmSpace.apk",
   "versionUrl": "https://www.calmspacewithlumi.com/version.json",
-  "releaseNotes": "Removed Calm Coach and Sleep Support buttons from Settings.",
-  "publishedAt": "2026-08-14T15:17:19Z",
-  "apkSha256": "0a7e948ba97cb95f79e0c2992ff504954bf4f8399624db919f9a524ce7cc772b"
+  "releaseNotes": "Improved Lumi onboarding layout, moved Skip, and enabled automatic voice playback.",
+  "publishedAt": "2026-08-15T01:12:51Z",
+  "apkSha256": "cebc2b390577d8a0d3b2f42a58231a0fc313ac15b21ac327fec483ca58ac7892"
 }
