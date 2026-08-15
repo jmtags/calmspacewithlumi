@@ -1,9 +1,9 @@
 {
-  "latestVersionCode": 9,
-  "latestVersionName": "1.8",
+  "latestVersionCode": 10,
+  "latestVersionName": "1.9",
   "apkUrl": "https://www.calmspacewithlumi.com/CalmSpace.apk",
   "versionUrl": "https://www.calmspacewithlumi.com/version.json",
-  "releaseNotes": "Improved Lumi onboarding layout, moved Skip, and enabled automatic voice playback.",
-  "publishedAt": "2026-08-15T01:12:51Z",
-  "apkSha256": "cebc2b390577d8a0d3b2f42a58231a0fc313ac15b21ac327fec483ca58ac7892"
+  "releaseNotes": "Improved Breathe with Lumi subtitle timing and fixed post-breathing check-in icons.",
+  "publishedAt": "2026-08-15T01:55:39Z",
+  "apkSha256": "ad42d170319154ca169b90aa71a37fb6eec3f086d02fd12fab6e828b9dba65c2"
 }
