@@ -1,9 +1,9 @@
 {
-  "latestVersionCode": 24,
-  "latestVersionName": "1.23",
+  "latestVersionCode": 25,
+  "latestVersionName": "1.24",
   "apkUrl": "https://www.calmspacewithlumi.com/CalmSpace.apk",
   "versionUrl": "https://www.calmspacewithlumi.com/version.json",
-  "releaseNotes": "Reduced Soothing Sounds library card title sizes.",
-  "publishedAt": "2026-08-16T01:17:35Z",
-  "apkSha256": "3252af90505f6878b11bed454420fe095f7d05fe05a5637b2ca2cac28bb82707"
+  "releaseNotes": "Share the Calm now includes the CalmSpace URL link with the QR code.",
+  "publishedAt": "2026-08-16T05:19:31Z",
+  "apkSha256": "b929078feeb671207074454341d6539b3a71d8f8079825a46970572031469294"
 }
