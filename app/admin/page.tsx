@@ -10,6 +10,7 @@ type LoginState = "idle" | "loading";
 type AccessState = "checking" | "allowed" | "denied" | "signed-out";
 type CountItem = { label: string; count: number };
 type Stats = {
+  allTimeDownloads: number;
   downloads: number;
   pageViews: number;
   uniqueSessions: number;
@@ -211,7 +212,7 @@ export default function AdminPage() {
           <div className="analytics-dashboard">
             <div className="admin-empty">
               <h2>Welcome, {user.email}</h2>
-              <p>Analytics update as visitors use the website. Location depends on deployment headers, so local traffic may appear as Unknown.</p>
+              <p>Analytics update as visitors use the website. Download totals count APK download clicks, not confirmed installs. Location depends on deployment headers, so local traffic may appear as Unknown.</p>
             </div>
 
             {statsMessage && <p className="admin-message">{statsMessage}</p>}
@@ -219,7 +220,8 @@ export default function AdminPage() {
             {stats && (
               <>
                 <div className="stats-grid">
-                  <StatCard label="APK downloads" value={stats.downloads} />
+                  <StatCard label="All APK downloads" value={stats.allTimeDownloads} />
+                  <StatCard label="APK downloads (30d)" value={stats.downloads} />
                   <StatCard label="Page views" value={stats.pageViews} />
                   <StatCard label="Unique sessions" value={stats.uniqueSessions} />
                   <StatCard label="Average stay" value={formatDuration(stats.averageStaySeconds)} />

@@ -79,6 +79,15 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
+  const { count: allTimeDownloads, error: downloadsError } = await supabase
+    .from("analytics_events")
+    .select("id", { count: "exact", head: true })
+    .eq("event_type", "download_click");
+
+  if (downloadsError) {
+    return NextResponse.json({ error: downloadsError.message }, { status: 500 });
+  }
+
   const events = (data ?? []) as AnalyticsEvent[];
   const { data: feedbackData, error: feedbackError } = await supabase
     .from("feedback_submissions")
@@ -104,6 +113,7 @@ export async function GET(request: NextRequest) {
     : 0;
 
   return NextResponse.json({
+    allTimeDownloads: allTimeDownloads ?? 0,
     downloads,
     pageViews,
     uniqueSessions,
