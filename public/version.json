@@ -1,9 +1,9 @@
 {
-  "latestVersionCode": 25,
-  "latestVersionName": "1.24",
+  "latestVersionCode": 27,
+  "latestVersionName": "1.26",
   "apkUrl": "https://www.calmspacewithlumi.com/CalmSpace.apk",
   "versionUrl": "https://www.calmspacewithlumi.com/version.json",
-  "releaseNotes": "Share the Calm now includes the CalmSpace URL link with the QR code.",
-  "publishedAt": "2026-08-16T05:19:31Z",
-  "apkSha256": "b929078feeb671207074454341d6539b3a71d8f8079825a46970572031469294"
+  "releaseNotes": "Added When Thoughts Feel Too Loud guided support practice.",
+  "publishedAt": "2026-08-16T07:06:16Z",
+  "apkSha256": "777bc54651e9f90bd56b36a62a1206a9e16ee3c91a89ea41ccbdd5d5beb9e767"
 }
