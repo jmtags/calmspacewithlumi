@@ -1,9 +1,9 @@
 {
-  "latestVersionCode": 23,
-  "latestVersionName": "1.22",
+  "latestVersionCode": 24,
+  "latestVersionName": "1.23",
   "apkUrl": "https://www.calmspacewithlumi.com/CalmSpace.apk",
   "versionUrl": "https://www.calmspacewithlumi.com/version.json",
-  "releaseNotes": "Added Daily Check-In return buttons for journal, breathing, and sounds.",
-  "publishedAt": "2026-08-15T15:34:37Z",
-  "apkSha256": "375ecf66d90e25edd56c6f44528d85815a4b1d8a58417a82499099b5c999af97"
+  "releaseNotes": "Reduced Soothing Sounds library card title sizes.",
+  "publishedAt": "2026-08-16T01:17:35Z",
+  "apkSha256": "3252af90505f6878b11bed454420fe095f7d05fe05a5637b2ca2cac28bb82707"
 }
