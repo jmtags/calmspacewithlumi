@@ -1,9 +1,9 @@
 {
-  "latestVersionCode": 27,
-  "latestVersionName": "1.26",
+  "latestVersionCode": 28,
+  "latestVersionName": "1.27",
   "apkUrl": "https://www.calmspacewithlumi.com/CalmSpace.apk",
   "versionUrl": "https://www.calmspacewithlumi.com/version.json",
-  "releaseNotes": "Added When Thoughts Feel Too Loud guided support practice.",
-  "publishedAt": "2026-08-16T07:06:16Z",
-  "apkSha256": "777bc54651e9f90bd56b36a62a1206a9e16ee3c91a89ea41ccbdd5d5beb9e767"
+  "releaseNotes": "Added soothing sounds sleep timer.",
+  "publishedAt": "2026-08-17T01:11:58Z",
+  "apkSha256": "a00fb37e3e7889dc668654a26ede4e842d3bfa9a1516fe3c54e3cc32cdcd2145"
 }
