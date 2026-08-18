@@ -13,8 +13,11 @@ type AnalyticsEvent = {
 };
 
 type FeedbackSubmission = {
+  created_at: string;
   rating: number;
   category: string;
+  comment: string;
+  page_path: string;
 };
 
 function countItems(values: Array<string | null | undefined>, fallback = "Unknown") {
@@ -91,8 +94,9 @@ export async function GET(request: NextRequest) {
   const events = (data ?? []) as AnalyticsEvent[];
   const { data: feedbackData, error: feedbackError } = await supabase
     .from("feedback_submissions")
-    .select("rating,category")
+    .select("created_at,rating,category,comment,page_path")
     .gte("created_at", new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString())
+    .order("created_at", { ascending: false })
     .limit(5000);
 
   if (feedbackError) {
@@ -123,6 +127,13 @@ export async function GET(request: NextRequest) {
       ? Number((feedback.reduce((sum, item) => sum + item.rating, 0) / feedback.length).toFixed(1))
       : 0,
     feedbackCategories: topCounts(feedback.map((item) => item.category)),
+    recentFeedback: feedback.slice(0, 20).map((item) => ({
+      createdAt: item.created_at,
+      rating: item.rating,
+      category: item.category,
+      comment: item.comment,
+      pagePath: item.page_path,
+    })),
     topLocations: allLocations.slice(0, 8),
     allLocations,
     topSections: topCounts(

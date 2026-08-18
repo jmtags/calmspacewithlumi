@@ -142,7 +142,8 @@
 }
 
 .stat-card,
-.stats-list {
+.stats-list,
+.feedback-reviews {
   background: #fffdf7;
   border: 1px solid #e4ddcf;
   border-radius: 18px;
@@ -179,6 +180,10 @@
   padding: 20px;
 }
 
+.feedback-reviews {
+  padding: 22px;
+}
+
 .stats-list-header {
   display: flex;
   align-items: flex-start;
@@ -188,6 +193,18 @@
 
 .stats-list h2 {
   font-size: 24px;
+}
+
+.feedback-reviews h2 {
+  font-size: 28px;
+  margin: 0;
+}
+
+.stats-list-header > span {
+  color: #66776f;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
 }
 
 .stats-list-action {
@@ -213,6 +230,51 @@
   padding: 0;
   margin: 16px 0 0;
   list-style: none;
+}
+
+.feedback-reviews ol {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  margin: 18px 0 0;
+  list-style: none;
+}
+
+.feedback-reviews li {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid #e4ddcf;
+  border-radius: 14px;
+  background: #fbf8ef;
+}
+
+.review-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.review-meta strong {
+  color: #2c7d6a;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.review-meta span,
+.feedback-reviews small {
+  color: #66776f;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.feedback-reviews p {
+  margin: 0;
+  color: #36574c;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 .stats-list li {
@@ -247,5 +309,10 @@
   .stats-grid,
   .stats-lists {
     grid-template-columns: 1fr;
+  }
+
+  .review-meta {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }

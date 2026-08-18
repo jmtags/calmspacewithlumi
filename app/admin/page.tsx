@@ -9,6 +9,13 @@ import "./admin.css";
 type LoginState = "idle" | "loading";
 type AccessState = "checking" | "allowed" | "denied" | "signed-out";
 type CountItem = { label: string; count: number };
+type FeedbackItem = {
+  createdAt: string;
+  rating: number;
+  category: string;
+  comment: string;
+  pagePath: string;
+};
 type Stats = {
   allTimeDownloads: number;
   downloads: number;
@@ -18,6 +25,7 @@ type Stats = {
   feedbackCount: number;
   averageRating: number;
   feedbackCategories: CountItem[];
+  recentFeedback: FeedbackItem[];
   topLocations: CountItem[];
   allLocations: CountItem[];
   topSections: CountItem[];
@@ -247,6 +255,8 @@ export default function AdminPage() {
                   <StatsList title="Feedback topics" items={stats.feedbackCategories} />
                   <StatsList title="Top pages" items={stats.topPages} />
                 </div>
+
+                <FeedbackReviews reviews={stats.recentFeedback} />
               </>
             )}
           </div>
@@ -258,6 +268,33 @@ export default function AdminPage() {
 
 function StatCard({ label, value }: { label: string; value: number | string }) {
   return <article className="stat-card"><span>{label}</span><strong>{value}</strong></article>;
+}
+
+function FeedbackReviews({ reviews }: { reviews: FeedbackItem[] }) {
+  return (
+    <article className="feedback-reviews">
+      <div className="stats-list-header">
+        <h2>User reviews</h2>
+        <span>{reviews.length ? `${reviews.length} latest` : "No data"}</span>
+      </div>
+      {reviews.length ? (
+        <ol>
+          {reviews.map((review) => (
+            <li key={`${review.createdAt}-${review.comment}`}>
+              <div className="review-meta">
+                <strong>{review.rating}/5</strong>
+                <span>{formatFeedbackCategory(review.category)} - {formatDateTime(review.createdAt)}</span>
+              </div>
+              <p>{review.comment}</p>
+              <small>{review.pagePath}</small>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p>No reviews yet.</p>
+      )}
+    </article>
+  );
 }
 
 function StatsList({ title, items, action }: { title: string; items: CountItem[]; action?: ReactNode }) {
@@ -274,6 +311,20 @@ function StatsList({ title, items, action }: { title: string; items: CountItem[]
       )}
     </article>
   );
+}
+
+function formatFeedbackCategory(category: string) {
+  if (category === "both") return "App + website";
+  return category.charAt(0).toUpperCase() + category.slice(1);
+}
+
+function formatDateTime(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Unknown time";
+  return new Intl.DateTimeFormat(undefined, {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(date);
 }
 
 function formatDuration(seconds: number) {
