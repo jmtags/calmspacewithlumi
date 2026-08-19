@@ -1,9 +1,9 @@
 {
-  "latestVersionCode": 29,
-  "latestVersionName": "1.28",
+  "latestVersionCode": 30,
+  "latestVersionName": "1.29",
   "apkUrl": "https://www.calmspacewithlumi.com/CalmSpace.apk",
   "versionUrl": "https://www.calmspacewithlumi.com/version.json",
-  "releaseNotes": "Added nearby psychological clinic directory with offline saved results.",
-  "publishedAt": "2026-08-18T00:52:46Z",
-  "apkSha256": "dc72938a03eff355b8920cec353655b6177a937f1ef9d3b71ffddc073c837f80"
+  "releaseNotes": "Added mental health professional profile to About CalmSpace with Lumi.",
+  "publishedAt": "2026-08-19T03:32:52Z",
+  "apkSha256": "c7a7e88381008038ea0aa9689d2b96f59a178da604d440c904d1e6e5b62fb1b2"
 }
