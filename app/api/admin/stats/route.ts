@@ -189,10 +189,16 @@ export async function PATCH(request: NextRequest) {
     .update({ show_on_website: showOnWebsite })
     .eq("id", id)
     .select("id,show_on_website")
-    .single();
+    .maybeSingle();
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  if (!data) {
+    return NextResponse.json({
+      error: "Review could not be updated. Apply the latest Supabase moderation migration and try again.",
+    }, { status: 403 });
   }
 
   return NextResponse.json({
