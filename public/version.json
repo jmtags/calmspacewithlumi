@@ -1,9 +1,9 @@
 {
-  "latestVersionCode": 32,
-  "latestVersionName": "1.31",
+  "latestVersionCode": 33,
+  "latestVersionName": "1.32",
   "apkUrl": "https://www.calmspacewithlumi.com/CalmSpace.apk",
   "versionUrl": "https://www.calmspacewithlumi.com/version.json",
-  "releaseNotes": "Added three compressed half-length soothing sounds.",
-  "publishedAt": "2026-08-19T06:26:54Z",
-  "apkSha256": "65c5390f391f70125c19991122ac3e35056c55d985721b040ccfe2b8830f6b21"
+  "releaseNotes": "Changed Soothing Sounds picker to a swipeable carousel.",
+  "publishedAt": "2026-08-19T07:11:54Z",
+  "apkSha256": "56ef1ab428260ff5c9ecd76007e438ab01f6dd7c365f0890461b6deb3eff19c7"
 }
