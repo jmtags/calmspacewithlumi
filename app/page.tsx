@@ -1,6 +1,9 @@
 import { FeedbackForm } from "./feedback-form";
 import { createSupabaseServerClient } from "../lib/supabase/server";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const facebookUrl = "https://www.facebook.com/profile.php?id=61593585025875";
 
 type PublicReview = {
