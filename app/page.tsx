@@ -14,6 +14,12 @@ type PublicReview = {
   comment: string;
 };
 
+type ReviewSummary = {
+  average: string;
+  averageNumber: number;
+  distribution: Record<number, number>;
+};
+
 const features = [
   { icon: "◌", title: "Calm me now", text: "Follow a gentle guided breathing exercise when you need a quieter moment.", mascot: "/mascot/luna-breathing.png" },
   { icon: "♫", title: "Soothing sounds", text: "Choose rain, ocean, forest, fire, or birds and adjust the volume to what feels right.", mascot: "/mascot/luna-listening.png" },
@@ -46,7 +52,7 @@ async function getPublicReviews(): Promise<PublicReview[]> {
     .select("id,created_at,rating,category,comment")
     .eq("show_on_website", true)
     .order("created_at", { ascending: false })
-    .limit(6);
+    .limit(50);
 
   if (error) return [];
   return (data ?? []) as PublicReview[];
@@ -62,6 +68,9 @@ function Luna({ src, className = "", alt = "Lumi, the CalmSpace lotus mascot" }:
 
 export default async function Home() {
   const publicReviews = await getPublicReviews();
+  const reviewSummary = summarizeReviews(publicReviews);
+  const firstReviews = publicReviews.slice(0, 3);
+  const extraReviews = publicReviews.slice(3);
 
   return (
     <main>
@@ -123,9 +132,29 @@ export default async function Home() {
       </section>
 
       <section className="reviews-section" id="reviews"><div className="shell">
-        <div className="reviews-intro"><span className="kicker">USER FEEDBACK</span><h2>Kind words from<br /><em>anonymous users.</em></h2><p>These reviews are shared only after admin approval. Names are never shown.</p></div>
+        <div className="reviews-intro"><span className="kicker">USER FEEDBACK</span><h2>Ratings and reviews<br /><em>from anonymous users.</em></h2><p>These reviews are shared only after admin approval. Names are never shown.</p></div>
         {publicReviews.length ? (
-          <div className="reviews-grid">{publicReviews.map((review) => <article className="review-card" key={review.id}><div className="review-card-top"><span className="review-stars" aria-label={`${review.rating} out of 5 stars`}>{formatStars(review.rating)}</span><small>Anonymous - {formatReviewCategory(review.category)}</small></div><p>{review.comment}</p></article>)}</div>
+          <div className="reviews-storefront">
+            <aside className="reviews-score" aria-label="Average approved review rating">
+              <strong>{reviewSummary.average}</strong>
+              <span aria-label={`${reviewSummary.average} out of 5 stars`}>{formatStars(Math.round(reviewSummary.averageNumber))}</span>
+              <small>{publicReviews.length} anonymous review{publicReviews.length === 1 ? "" : "s"}</small>
+              <div className="rating-bars" aria-hidden="true">
+                {[5, 4, 3, 2, 1].map((rating) => <div className="rating-bar" key={rating}><span>{rating}</span><b><i style={{ width: `${reviewSummary.distribution[rating]}%` }} /></b></div>)}
+              </div>
+            </aside>
+            <div className="reviews-list">
+              {firstReviews.map((review) => <ReviewCard review={review} key={review.id} />)}
+              {extraReviews.length > 0 && (
+                <details className="reviews-more">
+                  <summary>Show more reviews</summary>
+                  <div className="reviews-more-list">
+                    {extraReviews.map((review) => <ReviewCard review={review} key={review.id} />)}
+                  </div>
+                </details>
+              )}
+            </div>
+          </div>
         ) : (
           <div className="reviews-empty"><p>Approved anonymous reviews will appear here soon.</p></div>
         )}
@@ -158,7 +187,55 @@ function formatReviewCategory(category: string) {
   return category.charAt(0).toUpperCase() + category.slice(1);
 }
 
+function ReviewCard({ review }: { review: PublicReview }) {
+  return (
+    <article className="review-card">
+      <div className="review-card-top">
+        <div>
+          <span className="review-stars" aria-label={`${review.rating} out of 5 stars`}>{formatStars(review.rating)}</span>
+          <small>Anonymous - {formatReviewCategory(review.category)} - {formatReviewDate(review.created_at)}</small>
+        </div>
+      </div>
+      <p>{review.comment}</p>
+    </article>
+  );
+}
+
+function summarizeReviews(reviews: PublicReview[]): ReviewSummary {
+  const counts = reviews.reduce<Record<number, number>>((items, review) => {
+    items[review.rating] = (items[review.rating] ?? 0) + 1;
+    return items;
+  }, { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 });
+  const total = reviews.length || 1;
+  const averageNumber = reviews.length
+    ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
+    : 0;
+
+  return {
+    average: averageNumber.toFixed(1),
+    averageNumber,
+    distribution: {
+      1: (counts[1] / total) * 100,
+      2: (counts[2] / total) * 100,
+      3: (counts[3] / total) * 100,
+      4: (counts[4] / total) * 100,
+      5: (counts[5] / total) * 100,
+    },
+  };
+}
+
+function formatReviewDate(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Recently";
+
+  return new Intl.DateTimeFormat("en", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(date);
+}
+
 function formatStars(rating: number) {
   const safeRating = Math.max(0, Math.min(5, Math.round(rating)));
-  return "★".repeat(safeRating) + "☆".repeat(5 - safeRating);
+  return "\u2605".repeat(safeRating) + "\u2606".repeat(5 - safeRating);
 }

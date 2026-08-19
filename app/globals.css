@@ -764,88 +764,149 @@ em {
   line-height: 1.8;
 }
 
-.reviews-grid {
+.reviews-storefront {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  grid-template-columns: 280px 1fr;
+  gap: 36px;
   margin-top: 46px;
+  padding: 30px;
+  border: 1px solid #d7e5de;
+  border-radius: 24px;
+  background: #fffdf7;
+  box-shadow: 0 24px 60px #20372f12;
 }
 
-.review-card,
-.reviews-empty {
-  border: 1px solid #e4ddcf;
-  border-radius: 26px;
-  background:
-    linear-gradient(145deg, #fffdf7 0%, #fff8eb 52%, #f7fbf4 100%);
-  box-shadow: 0 22px 60px #20372f18;
+.reviews-score {
+  align-self: start;
+  padding: 22px;
+  border-radius: 20px;
+  background: #f7fbf4;
+}
+
+.reviews-score strong {
+  display: block;
+  color: #20372f;
+  font-size: 58px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.reviews-score > span,
+.review-stars {
+  display: block;
+  color: #18815f;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.reviews-score small,
+.review-card small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  margin-top: 6px;
+}
+
+.rating-bars {
+  display: grid;
+  gap: 7px;
+  margin-top: 20px;
+}
+
+.rating-bar {
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  gap: 8px;
+  align-items: center;
+  color: #66776f;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.rating-bar b {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e5ece8;
+}
+
+.rating-bar i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #18815f;
+}
+
+.reviews-list,
+.reviews-more-list {
+  display: grid;
+  gap: 0;
 }
 
 .review-card {
   display: grid;
-  gap: 22px;
-  min-height: 238px;
-  padding: 26px;
-  position: relative;
-  overflow: hidden;
-}
-
-.review-card::before {
-  content: "\"";
-  position: absolute;
-  top: 6px;
-  right: 22px;
-  color: #d7f4e7;
-  font-family: var(--font-serif), serif;
-  font-size: 92px;
-  line-height: 1;
-}
-
-.review-card::after {
-  content: "";
-  position: absolute;
-  inset: 10px;
-  border: 1px solid #ffffffb8;
-  border-radius: 20px;
-  pointer-events: none;
-}
-
-.review-card-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   gap: 12px;
-  position: relative;
-  z-index: 1;
+  padding: 22px 0;
+  border-bottom: 1px solid #e4ddcf;
 }
 
-.review-stars {
-  color: #e1a94b;
-  font-size: 18px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  text-shadow: 0 1px 0 #fff7dd;
-  white-space: nowrap;
+.review-card:first-child {
+  padding-top: 0;
 }
 
-.review-card small {
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 800;
-  text-align: right;
+.review-card:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.review-card-top > div {
+  display: grid;
+  gap: 4px;
 }
 
 .review-card p {
+  max-width: 760px;
   margin: 0;
   color: #36574c;
-  font-size: 16px;
-  line-height: 1.8;
-  position: relative;
-  z-index: 1;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.reviews-more {
+  margin-top: 8px;
+}
+
+.reviews-more summary {
+  width: fit-content;
+  border: 1px solid #c9dbd4;
+  border-radius: 999px;
+  padding: 10px 15px;
+  background: #e6f2ed;
+  color: #20372f;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 900;
+  list-style: none;
+}
+
+.reviews-more summary::-webkit-details-marker {
+  display: none;
+}
+
+.reviews-more[open] summary {
+  margin-bottom: 16px;
 }
 
 .reviews-empty {
   margin-top: 38px;
   padding: 24px;
+  border: 1px solid #e4ddcf;
+  border-radius: 22px;
+  background: #fffdf7;
+  box-shadow: 0 18px 44px #20372f12;
 }
 
 .reviews-empty p {
@@ -1206,11 +1267,17 @@ footer {
   .how-grid,
   .privacy,
   .feedback-inner,
-  .reviews-grid,
+  .reviews-storefront,
   .community-inner,
   .support-inner {
     grid-template-columns: 1fr;
     gap: 55px;
+  }
+  .reviews-storefront {
+    padding: 26px;
+  }
+  .reviews-score {
+    max-width: 420px;
   }
   .section-intro p {
     margin-top: 0;
@@ -1312,8 +1379,27 @@ footer {
   }
   .section,
   .screenshots-section,
-  .privacy {
+  .privacy,
+  .reviews-section {
     padding: 85px 0;
+  }
+  .reviews-intro h2 {
+    font-size: 45px;
+  }
+  .reviews-storefront {
+    gap: 28px;
+    padding: 20px;
+    border-radius: 20px;
+  }
+  .reviews-score {
+    max-width: none;
+    padding: 18px;
+  }
+  .reviews-score strong {
+    font-size: 48px;
+  }
+  .review-card p {
+    font-size: 14px;
   }
   .section-intro h2,
   .screenshots-intro h2,
