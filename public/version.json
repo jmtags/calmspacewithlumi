@@ -1,9 +1,9 @@
 {
-  "latestVersionCode": 31,
-  "latestVersionName": "1.30",
+  "latestVersionCode": 32,
+  "latestVersionName": "1.31",
   "apkUrl": "https://www.calmspacewithlumi.com/CalmSpace.apk",
   "versionUrl": "https://www.calmspacewithlumi.com/version.json",
-  "releaseNotes": "Restored About app details and added Dr. Josevy profile page with contribution and TikTok link.",
-  "publishedAt": "2026-08-19T03:56:18Z",
-  "apkSha256": "cb24ffe5f7f8bf4fb2fc13389ade22f00ab3e224c3979ca31d2340d6134771fc"
+  "releaseNotes": "Added three compressed half-length soothing sounds.",
+  "publishedAt": "2026-08-19T06:26:54Z",
+  "apkSha256": "65c5390f391f70125c19991122ac3e35056c55d985721b040ccfe2b8830f6b21"
 }
