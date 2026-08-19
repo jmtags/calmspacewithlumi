@@ -1,9 +1,9 @@
 {
-  "latestVersionCode": 33,
-  "latestVersionName": "1.32",
+  "latestVersionCode": 35,
+  "latestVersionName": "1.34",
   "apkUrl": "https://www.calmspacewithlumi.com/CalmSpace.apk",
   "versionUrl": "https://www.calmspacewithlumi.com/version.json",
-  "releaseNotes": "Changed Soothing Sounds picker to a swipeable carousel.",
-  "publishedAt": "2026-08-19T07:11:54Z",
-  "apkSha256": "56ef1ab428260ff5c9ecd76007e438ab01f6dd7c365f0890461b6deb3eff19c7"
+  "releaseNotes": "Changed theme toggle to a compact flashlight icon beside ambience controls.",
+  "publishedAt": "2026-08-19T08:49:21Z",
+  "apkSha256": "7874034b376f0c2c0d8b35dbd303dd10bbc3a626cf1b8ba478dc01db4f6902f8"
 }
