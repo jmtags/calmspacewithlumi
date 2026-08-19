@@ -1,9 +1,9 @@
 {
-  "latestVersionCode": 30,
-  "latestVersionName": "1.29",
+  "latestVersionCode": 31,
+  "latestVersionName": "1.30",
   "apkUrl": "https://www.calmspacewithlumi.com/CalmSpace.apk",
   "versionUrl": "https://www.calmspacewithlumi.com/version.json",
-  "releaseNotes": "Added mental health professional profile to About CalmSpace with Lumi.",
-  "publishedAt": "2026-08-19T03:32:52Z",
-  "apkSha256": "c7a7e88381008038ea0aa9689d2b96f59a178da604d440c904d1e6e5b62fb1b2"
+  "releaseNotes": "Restored About app details and added Dr. Josevy profile page with contribution and TikTok link.",
+  "publishedAt": "2026-08-19T03:56:18Z",
+  "apkSha256": "cb24ffe5f7f8bf4fb2fc13389ade22f00ab3e224c3979ca31d2340d6134771fc"
 }
