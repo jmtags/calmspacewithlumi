@@ -125,7 +125,7 @@ export default async function Home() {
       <section className="reviews-section" id="reviews"><div className="shell">
         <div className="reviews-intro"><span className="kicker">USER FEEDBACK</span><h2>Kind words from<br /><em>anonymous users.</em></h2><p>These reviews are shared only after admin approval. Names are never shown.</p></div>
         {publicReviews.length ? (
-          <div className="reviews-grid">{publicReviews.map((review) => <article className="review-card" key={review.id}><div><span>{review.rating}/5</span><small>Anonymous - {formatReviewCategory(review.category)}</small></div><p>{review.comment}</p></article>)}</div>
+          <div className="reviews-grid">{publicReviews.map((review) => <article className="review-card" key={review.id}><div className="review-card-top"><span className="review-stars" aria-label={`${review.rating} out of 5 stars`}>{formatStars(review.rating)}</span><small>Anonymous - {formatReviewCategory(review.category)}</small></div><p>{review.comment}</p></article>)}</div>
         ) : (
           <div className="reviews-empty"><p>Approved anonymous reviews will appear here soon.</p></div>
         )}
@@ -156,4 +156,9 @@ export default async function Home() {
 function formatReviewCategory(category: string) {
   if (category === "both") return "App + website";
   return category.charAt(0).toUpperCase() + category.slice(1);
+}
+
+function formatStars(rating: number) {
+  const safeRating = Math.max(0, Math.min(5, Math.round(rating)));
+  return "★".repeat(safeRating) + "☆".repeat(5 - safeRating);
 }
