@@ -737,6 +737,108 @@ em {
   padding: 110px 0;
   background: #fffdf7;
 }
+
+.reviews-section {
+  padding: 105px 0;
+  background: #e6f2ed;
+}
+
+.reviews-intro {
+  max-width: 760px;
+}
+
+.reviews-intro h2,
+.community-inner h2 {
+  font-family: var(--font-serif), serif;
+  font-size: 58px;
+  font-weight: 430;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+  margin: 24px 0;
+}
+
+.reviews-intro p,
+.community-inner p {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 42px;
+}
+
+.review-card,
+.reviews-empty {
+  border: 1px solid #c8ddd5;
+  border-radius: 22px;
+  background: #fffdf7;
+  box-shadow: 0 18px 44px #20372f12;
+}
+
+.review-card {
+  display: grid;
+  gap: 18px;
+  min-height: 220px;
+  padding: 24px;
+}
+
+.review-card div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.review-card span {
+  color: var(--teal);
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.review-card small {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-align: right;
+}
+
+.review-card p {
+  margin: 0;
+  color: #36574c;
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.reviews-empty {
+  margin-top: 38px;
+  padding: 24px;
+}
+
+.reviews-empty p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.community-section {
+  padding: 95px 0;
+  background: #fbf8ef;
+}
+
+.community-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 50px;
+  align-items: center;
+}
+
+.community-inner p {
+  max-width: 620px;
+}
+
 .feedback-inner {
   display: grid;
   grid-template-columns: 0.92fr 1.08fr;
@@ -1074,6 +1176,8 @@ footer {
   .how-grid,
   .privacy,
   .feedback-inner,
+  .reviews-grid,
+  .community-inner,
   .support-inner {
     grid-template-columns: 1fr;
     gap: 55px;
@@ -1237,7 +1341,15 @@ footer {
   .feedback-section {
     padding: 80px 0;
   }
+  .reviews-section,
+  .community-section {
+    padding: 80px 0;
+  }
   .feedback-copy h2 {
+    font-size: 45px;
+  }
+  .reviews-intro h2,
+  .community-inner h2 {
     font-size: 45px;
   }
   .feedback-card {

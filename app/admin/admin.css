@@ -249,6 +249,11 @@
   background: #fbf8ef;
 }
 
+.feedback-reviews li.review-public {
+  border-color: #9fd5c4;
+  background: #eef8f4;
+}
+
 .review-meta {
   display: flex;
   align-items: center;
@@ -275,6 +280,13 @@
   color: #36574c;
   font-size: 14px;
   line-height: 1.6;
+}
+
+.review-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .stats-list li {
@@ -312,6 +324,11 @@
   }
 
   .review-meta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .review-footer {
     align-items: flex-start;
     flex-direction: column;
   }

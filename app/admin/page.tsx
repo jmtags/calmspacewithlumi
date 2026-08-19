@@ -10,11 +10,13 @@ type LoginState = "idle" | "loading";
 type AccessState = "checking" | "allowed" | "denied" | "signed-out";
 type CountItem = { label: string; count: number };
 type FeedbackItem = {
+  id: string;
   createdAt: string;
   rating: number;
   category: string;
   comment: string;
   pagePath: string;
+  showOnWebsite: boolean;
 };
 type Stats = {
   allTimeDownloads: number;
@@ -121,6 +123,47 @@ export default function AdminPage() {
     }
 
     setStats(result);
+    setStatsMessage("");
+  }
+
+  async function toggleFeedbackVisibility(review: FeedbackItem) {
+    if (!supabase) return;
+
+    const { data: sessionData } = await supabase.auth.getSession();
+    const token = sessionData.session?.access_token;
+
+    if (!token) {
+      setStatsMessage("Your admin session expired. Please sign in again.");
+      return;
+    }
+
+    const nextVisibility = !review.showOnWebsite;
+    const response = await fetch("/api/admin/stats", {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: review.id,
+        showOnWebsite: nextVisibility,
+      }),
+    });
+    const result = await response.json();
+
+    if (!response.ok) {
+      setStatsMessage(result.error ?? "Unable to update review visibility.");
+      return;
+    }
+
+    setStats((current) => current
+      ? {
+          ...current,
+          recentFeedback: current.recentFeedback.map((item) => item.id === review.id
+            ? { ...item, showOnWebsite: result.showOnWebsite }
+            : item),
+        }
+      : current);
     setStatsMessage("");
   }
 
@@ -256,7 +299,7 @@ export default function AdminPage() {
                   <StatsList title="Top pages" items={stats.topPages} />
                 </div>
 
-                <FeedbackReviews reviews={stats.recentFeedback} />
+                <FeedbackReviews reviews={stats.recentFeedback} onToggleVisibility={toggleFeedbackVisibility} />
               </>
             )}
           </div>
@@ -270,23 +313,28 @@ function StatCard({ label, value }: { label: string; value: number | string }) {
   return <article className="stat-card"><span>{label}</span><strong>{value}</strong></article>;
 }
 
-function FeedbackReviews({ reviews }: { reviews: FeedbackItem[] }) {
+function FeedbackReviews({ reviews, onToggleVisibility }: { reviews: FeedbackItem[]; onToggleVisibility: (review: FeedbackItem) => void }) {
   return (
     <article className="feedback-reviews">
       <div className="stats-list-header">
         <h2>User reviews</h2>
-        <span>{reviews.length ? `${reviews.length} latest` : "No data"}</span>
+        <span>{reviews.length ? `${reviews.filter((review) => review.showOnWebsite).length} public` : "No data"}</span>
       </div>
       {reviews.length ? (
         <ol>
           {reviews.map((review) => (
-            <li key={`${review.createdAt}-${review.comment}`}>
+            <li className={review.showOnWebsite ? "review-public" : ""} key={review.id}>
               <div className="review-meta">
                 <strong>{review.rating}/5</strong>
                 <span>{formatFeedbackCategory(review.category)} - {formatDateTime(review.createdAt)}</span>
               </div>
               <p>{review.comment}</p>
-              <small>{review.pagePath}</small>
+              <div className="review-footer">
+                <small>{review.pagePath}</small>
+                <button className="stats-list-action" type="button" onClick={() => onToggleVisibility(review)}>
+                  {review.showOnWebsite ? "Hide from website" : "Show on website"}
+                </button>
+              </div>
             </li>
           ))}
         </ol>

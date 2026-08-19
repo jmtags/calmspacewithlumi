@@ -1,4 +1,15 @@
 import { FeedbackForm } from "./feedback-form";
+import { createSupabaseServerClient } from "../lib/supabase/server";
+
+const facebookUrl = "https://www.facebook.com/profile.php?id=61593585025875";
+
+type PublicReview = {
+  id: string;
+  created_at: string;
+  rating: number;
+  category: string;
+  comment: string;
+};
 
 const features = [
   { icon: "◌", title: "Calm me now", text: "Follow a gentle guided breathing exercise when you need a quieter moment.", mascot: "/mascot/luna-breathing.png" },
@@ -23,6 +34,21 @@ const donationDetails = {
   qrCode: "/donation-qr.png",
 };
 
+async function getPublicReviews(): Promise<PublicReview[]> {
+  const supabase = createSupabaseServerClient();
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from("feedback_submissions")
+    .select("id,created_at,rating,category,comment")
+    .eq("show_on_website", true)
+    .order("created_at", { ascending: false })
+    .limit(6);
+
+  if (error) return [];
+  return (data ?? []) as PublicReview[];
+}
+
 function LotusMark({ small = false }: { small?: boolean }) {
   return <img className={small ? "brand-mark small" : "brand-mark"} src="/calmspace-art.png" alt="" />;
 }
@@ -31,13 +57,15 @@ function Luna({ src, className = "", alt = "Lumi, the CalmSpace lotus mascot" }:
   return <img className={`luna ${className}`} src={src} alt={alt} loading="lazy" />;
 }
 
-export default function Home() {
+export default async function Home() {
+  const publicReviews = await getPublicReviews();
+
   return (
     <main>
       <nav className="nav shell" aria-label="Main navigation">
         <a className="brand" href="#top"><LotusMark small /><span>CalmSpace</span></a>
         <div className="nav-links">
-          <a href="#features">Features</a><a href="#privacy">Privacy</a><a href="#feedback">Feedback</a><a href="#support">Support us</a>
+          <a href="#features">Features</a><a href="#reviews">Reviews</a><a href="#privacy">Privacy</a><a href="#feedback">Feedback</a><a href="#community">Community</a>
         </div>
         <a className="button button-small" href="/CalmSpace.apk" download>Download APK <span>↓</span></a>
       </nav>
@@ -91,9 +119,23 @@ export default function Home() {
         <div className="privacy-copy"><span className="kicker">YOUR SPACE IS YOURS</span><h2>Personal reflection<br />should stay <em>personal.</em></h2><p>Your name, journal entries, moods, and settings are saved locally on your phone. CalmSpace is designed as a private self-care companion—not a place that profits from your feelings.</p><div className="privacy-list"><span>✓ Local device storage</span><span>✓ No advertising trackers</span><span>✓ Clear privacy controls</span></div><small>CalmSpace is not a substitute for professional care or emergency support.</small></div>
       </section>
 
+      <section className="reviews-section" id="reviews"><div className="shell">
+        <div className="reviews-intro"><span className="kicker">USER FEEDBACK</span><h2>Kind words from<br /><em>anonymous users.</em></h2><p>These reviews are shared only after admin approval. Names are never shown.</p></div>
+        {publicReviews.length ? (
+          <div className="reviews-grid">{publicReviews.map((review) => <article className="review-card" key={review.id}><div><span>{review.rating}/5</span><small>Anonymous - {formatReviewCategory(review.category)}</small></div><p>{review.comment}</p></article>)}</div>
+        ) : (
+          <div className="reviews-empty"><p>Approved anonymous reviews will appear here soon.</p></div>
+        )}
+      </div></section>
+
       <section className="feedback-section" id="feedback"><div className="shell feedback-inner">
         <div className="feedback-copy"><span className="kicker">HELP CALMSPACE GROW</span><h2>Your thoughts can make<br /><em>Lumi gentler.</em></h2><p>Tell us what feels helpful, confusing, missing, or worth improving in the app or website.</p><small>All comments and suggestions are anonymous. Please avoid sharing names, phone numbers, email addresses, or private health details.</small></div>
         <div className="feedback-card"><FeedbackForm /></div>
+      </div></section>
+
+      <section className="community-section" id="community"><div className="shell community-inner">
+        <div><span className="kicker">COMMUNITY UPDATES</span><h2>Follow CalmSpace<br /><em>with Lumi.</em></h2><p>Visit the Facebook page for app updates, news, and gentle community support around mental health and self-care.</p></div>
+        <a className="button" href={facebookUrl} target="_blank" rel="noreferrer">Open Facebook page <span>â†’</span></a>
       </div></section>
 
       <section className="support" id="support"><div className="shell support-inner">
@@ -103,7 +145,12 @@ export default function Home() {
 
       <section className="final-cta shell" id="try"><Luna src="/mascot/luna-sleeping.png" className="final-luna" alt="Lumi resting peacefully" /><span className="kicker">YOUR CALM SPACE IS READY</span><h2>Take a breath.<br /><em>You&apos;re here now.</em></h2><p>A private, simple companion for the moments you need to pause.</p><a className="button" href="/CalmSpace.apk" download>Download CalmSpace APK <span>↓</span></a></section>
 
-      <footer><div className="shell footer-inner"><a className="brand" href="#top"><LotusMark small /><span>CalmSpace</span></a><p>Made gently for real-life moments.</p><div><a href="#privacy">Privacy</a><a href="#feedback">Feedback</a><a href="#support">Donate</a><a href="mailto:hello@calmspace.app">Contact</a></div></div></footer>
+      <footer><div className="shell footer-inner"><a className="brand" href="#top"><LotusMark small /><span>CalmSpace</span></a><p>Made gently for real-life moments.</p><div><a href="#privacy">Privacy</a><a href="#feedback">Feedback</a><a href="#support">Donate</a><a href={facebookUrl} target="_blank" rel="noreferrer">Facebook</a><a href="mailto:hello@calmspace.app">Contact</a></div></div></footer>
     </main>
   );
+}
+
+function formatReviewCategory(category: string) {
+  if (category === "both") return "App + website";
+  return category.charAt(0).toUpperCase() + category.slice(1);
 }

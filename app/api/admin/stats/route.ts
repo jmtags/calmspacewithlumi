@@ -13,11 +13,13 @@ type AnalyticsEvent = {
 };
 
 type FeedbackSubmission = {
+  id: string;
   created_at: string;
   rating: number;
   category: string;
   comment: string;
   page_path: string;
+  show_on_website: boolean;
 };
 
 function countItems(values: Array<string | null | undefined>, fallback = "Unknown") {
@@ -39,26 +41,32 @@ function locationLabel(event: AnalyticsEvent) {
   return [event.city, event.region, event.country].filter(Boolean).join(", ");
 }
 
-export async function GET(request: NextRequest) {
+async function requireAdmin(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
   const accessToken = authHeader?.startsWith("Bearer ")
     ? authHeader.slice("Bearer ".length)
     : null;
 
   if (!accessToken) {
-    return NextResponse.json({ error: "Missing access token" }, { status: 401 });
+    return {
+      error: NextResponse.json({ error: "Missing access token" }, { status: 401 }),
+    };
   }
 
   const supabase = createSupabaseServerClient(accessToken);
   if (!supabase) {
-    return NextResponse.json({ error: "Supabase is not configured" }, { status: 500 });
+    return {
+      error: NextResponse.json({ error: "Supabase is not configured" }, { status: 500 }),
+    };
   }
 
   const { data: userData, error: userError } = await supabase.auth.getUser();
   const email = userData.user?.email;
 
   if (userError || !email) {
-    return NextResponse.json({ error: "Invalid session" }, { status: 401 });
+    return {
+      error: NextResponse.json({ error: "Invalid session" }, { status: 401 }),
+    };
   }
 
   const { data: adminUser, error: adminError } = await supabase
@@ -68,8 +76,18 @@ export async function GET(request: NextRequest) {
     .maybeSingle();
 
   if (adminError || !adminUser) {
-    return NextResponse.json({ error: "Access not allowed" }, { status: 403 });
+    return {
+      error: NextResponse.json({ error: "Access not allowed" }, { status: 403 }),
+    };
   }
+
+  return { supabase };
+}
+
+export async function GET(request: NextRequest) {
+  const admin = await requireAdmin(request);
+  if (admin.error) return admin.error;
+  const { supabase } = admin;
 
   const { data, error } = await supabase
     .from("analytics_events")
@@ -94,7 +112,7 @@ export async function GET(request: NextRequest) {
   const events = (data ?? []) as AnalyticsEvent[];
   const { data: feedbackData, error: feedbackError } = await supabase
     .from("feedback_submissions")
-    .select("created_at,rating,category,comment,page_path")
+    .select("id,created_at,rating,category,comment,page_path,show_on_website")
     .gte("created_at", new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString())
     .order("created_at", { ascending: false })
     .limit(5000);
@@ -128,11 +146,13 @@ export async function GET(request: NextRequest) {
       : 0,
     feedbackCategories: topCounts(feedback.map((item) => item.category)),
     recentFeedback: feedback.slice(0, 20).map((item) => ({
+      id: item.id,
       createdAt: item.created_at,
       rating: item.rating,
       category: item.category,
       comment: item.comment,
       pagePath: item.page_path,
+      showOnWebsite: item.show_on_website,
     })),
     topLocations: allLocations.slice(0, 8),
     allLocations,
@@ -142,5 +162,41 @@ export async function GET(request: NextRequest) {
         .map((event) => event.section_id)
     ),
     topPages: topCounts(events.map((event) => event.page_path)),
+  });
+}
+
+export async function PATCH(request: NextRequest) {
+  const admin = await requireAdmin(request);
+  if (admin.error) return admin.error;
+  const { supabase } = admin;
+
+  let body: Record<string, unknown>;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
+
+  const id = typeof body.id === "string" ? body.id : "";
+  const showOnWebsite = typeof body.showOnWebsite === "boolean" ? body.showOnWebsite : null;
+
+  if (!id || showOnWebsite === null) {
+    return NextResponse.json({ error: "Missing review publish setting" }, { status: 400 });
+  }
+
+  const { data, error } = await supabase
+    .from("feedback_submissions")
+    .update({ show_on_website: showOnWebsite })
+    .eq("id", id)
+    .select("id,show_on_website")
+    .single();
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json({
+    id: data.id,
+    showOnWebsite: data.show_on_website,
   });
 }
