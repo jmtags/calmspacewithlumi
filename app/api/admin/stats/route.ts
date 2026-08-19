@@ -113,7 +113,6 @@ export async function GET(request: NextRequest) {
   const { data: feedbackData, error: feedbackError } = await supabase
     .from("feedback_submissions")
     .select("id,created_at,rating,category,comment,page_path,show_on_website")
-    .gte("created_at", new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString())
     .order("created_at", { ascending: false })
     .limit(5000);
 
@@ -145,7 +144,7 @@ export async function GET(request: NextRequest) {
       ? Number((feedback.reduce((sum, item) => sum + item.rating, 0) / feedback.length).toFixed(1))
       : 0,
     feedbackCategories: topCounts(feedback.map((item) => item.category)),
-    recentFeedback: feedback.slice(0, 20).map((item) => ({
+    recentFeedback: feedback.slice(0, 100).map((item) => ({
       id: item.id,
       createdAt: item.created_at,
       rating: item.rating,

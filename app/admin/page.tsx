@@ -276,7 +276,7 @@ export default function AdminPage() {
                   <StatCard label="Page views" value={stats.pageViews} />
                   <StatCard label="Unique sessions" value={stats.uniqueSessions} />
                   <StatCard label="Average stay" value={formatDuration(stats.averageStaySeconds)} />
-                  <StatCard label="Feedback sent" value={stats.feedbackCount} />
+                  <StatCard label="Feedback sent (all time)" value={stats.feedbackCount} />
                   <StatCard label="Average rating" value={stats.averageRating ? `${stats.averageRating}/5` : "No data"} />
                 </div>
 
