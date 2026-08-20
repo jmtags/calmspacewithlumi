@@ -1,9 +1,9 @@
 {
-  "latestVersionCode": 35,
-  "latestVersionName": "1.34",
+  "latestVersionCode": 39,
+  "latestVersionName": "1.38",
   "apkUrl": "https://www.calmspacewithlumi.com/CalmSpace.apk",
   "versionUrl": "https://www.calmspacewithlumi.com/version.json",
-  "releaseNotes": "Changed theme toggle to a compact flashlight icon beside ambience controls.",
-  "publishedAt": "2026-08-19T08:49:21Z",
-  "apkSha256": "7874034b376f0c2c0d8b35dbd303dd10bbc3a626cf1b8ba478dc01db4f6902f8"
+  "releaseNotes": "Added more full-screen reminder backgrounds.",
+  "publishedAt": "2026-08-20T05:01:27Z",
+  "apkSha256": "9ba4b45c64b5a1b5bac093c922687fb7cd61efaa1790f5a11a1b5a40d5b7e786"
 }
